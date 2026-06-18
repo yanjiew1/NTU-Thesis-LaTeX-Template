@@ -670,37 +670,32 @@
 }
 
 % [插入浮水印]
-% - \makewatermark{#1}{#2}      生成浮水印
-%   #1 Opacity                  設置透明度
-%   #2 Logo Path                校徽路徑
+% - \makewatermark{#1}          生成浮水印
+%   #1 Logo Path                校徽路徑
 %
-\newcommand{\makewatermark}[2]{
-  \AddToShipoutPicture{
-    \put(0,0){
-      \parbox[b][\paperheight]{\paperwidth}{
-        \vfill
-        \centering
-        \begin{tikzpicture}[remember picture, overlay]
-          \coordinate (WM) at ([xshift=-4.325cm, yshift=-4.325cm] current page.north east);
-          \node [scale=1] at (WM) {\includegraphics[width=3.65cm, height=3.65cm]{#2}};
-          \filldraw [fill=white, opacity=1-\the\numexpr#1] (current page.north east) rectangle (current page.south west);
-        \end{tikzpicture}
-      \vfill
-}}}}
+\newcommand{\makewatermark}[1]{%
+  \AddToShipoutPicture{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=north east, inner sep=0pt] at ([xshift=-2.5cm,yshift=-2.5cm]current page.north east) {%
+        \includegraphics[width=3.6576cm, height=3.6576cm]{#1}%
+      };
+    \end{tikzpicture}%
+  }%
+}
 
 % [插入數位識別]
 % - \InsertDOI{#1}              生成數位識別碼
 %   #1 DOI Code                 數位識別碼
 %
-\newcommand{\insertdoi}[1]{
-  \AddToShipoutPicture{
-    \AtPageUpperLeft{
-      \fboxrule=0pt\fboxsep=0pt\framebox[\paperwidth][r]{
-      \raisebox{-\paperheight}{
-      \put(\LenToUnit{-1cm},\LenToUnit{1cm}){
-      \fboxrule=0pt\fboxsep=0pt\framebox[0pt][r]{
-        \href{http://dx.doi.org/#1}{doi:#1}
-}}}}}}}
+\newcommand{\insertdoi}[1]{%
+  \AddToShipoutPicture{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=south east, inner sep=0pt] at ([xshift=-1cm,yshift=1cm]current page.south east) {%
+          \href{http://doi.org/#1}{\textcolor{black}{doi:#1}}%
+      };
+    \end{tikzpicture}%
+  }
+}
 
 % [生成封面]
 % Generate the cover page
@@ -925,7 +920,7 @@
 % 根據設定決定是否添加浮水印
 % Insert watermark according to the config.
 %
-\ifthenelse{\equal{\ntu@watermark}{true}}{\makewatermark{0.25}{seal}}{}
+\ifthenelse{\equal{\ntu@watermark}{true}}{\makewatermark{watermark}}{}
 
 % 根據設定決定是否添加數位標識
 % Insert DOI according to the config.
