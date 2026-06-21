@@ -519,38 +519,17 @@
 % - \setCJKmonofont{}			中文等寬字體
 %
 
-\ifthenelse{\equal{\ntu@fontset}{default}}{
-  \setmainfont{Times New Roman}[
-    Path = \ntu@path@font ,
-    Extension = .ttf ,
-    BoldFont = *-Bold ,
-    ItalicFont = *-Italic ,
-    BoldItalicFont = *-BoldItalic, ]
-  \setCJKmainfont{BiauKai}[
-    Path = \ntu@path@cjkfont ,
-    Extension = .ttf , ]
-}
-
 \ifthenelse{\equal{\ntu@fontset}{template}}{
-  \setmainfont{Times New Roman}[
-    Path = \ntu@path@font ,
-    Extension = .ttf ,
-    BoldFont = *-Bold ,
-    ItalicFont = *-Italic ,
-    BoldItalicFont = *-BoldItalic, ]
-  \setCJKmainfont{BiauKai}[
-    Path = \ntu@path@cjkfont ,
-    Extension = .ttf ,
-    BoldFont = Kaiti-Black, ]
+  \RequirePackage{newtx}
+  \setCJKmainfont{TW-Kai-98_1}[
+    Path = \ntu@path@cjkfont,
+    Extension = .ttf,
+    AutoFakeBold = 2,]
 }
 
 \ifthenelse{\equal{\ntu@fontset}{overleaf}}{
-  \setmainfont{Times New Roman}
-  \setsansfont{Droid Sans}
-  \setmonofont{Courier New}
-  \setCJKmainfont{AR PL KaitiM Big5}
-  \setCJKsansfont{AR PL KaitiM Big5}
-  \setCJKmonofont{AR PL KaitiM Big5}
+  \RequirePackage{newtx}
+  \setCJKmainfont{TW-Kai}[AutoFakeBold = 2]
 }
 
 % [顏色設定]
