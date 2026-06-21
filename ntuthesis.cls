@@ -670,13 +670,18 @@
 
 % [插入浮水印]
 % - \makewatermark{#1}          生成浮水印
-%   #1 Logo Path                校徽路徑
+%   #1 Opacity                  不透明度 (0-1)
+%   #2 Logo Path                校徽路徑
 %
-\newcommand{\makewatermark}[1]{%
+\newcommand{\makewatermark}[2]{%
   \AddToShipoutPicture{%
     \begin{tikzpicture}[remember picture,overlay]
       \node[anchor=north east, inner sep=0pt] at ([xshift=-2.5cm,yshift=-2.5cm]current page.north east) {%
-        \includegraphics[width=3.6576cm, height=3.6576cm]{#1}%
+        \begin{tikzpicture}
+          \begin{scope}[opacity=#1, transparency group]
+            \node {\includegraphics[width=3.6576cm, height=3.6576cm]{#2}};
+          \end{scope}
+        \end{tikzpicture}%
       };
     \end{tikzpicture}%
   }%
@@ -919,7 +924,7 @@
 % 根據設定決定是否添加浮水印
 % Insert watermark according to the config.
 %
-\ifthenelse{\equal{\ntu@watermark}{true}}{\makewatermark{watermark}}{}
+\ifthenelse{\equal{\ntu@watermark}{true}}{\makewatermark{0.5}{watermark}}{}
 
 % 根據設定決定是否添加數位標識
 % Insert DOI according to the config.
